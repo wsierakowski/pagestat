@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 require('../support/bootstrap');
 
@@ -24,4 +24,4 @@ descrive('PageDownload', function() {
       }
     });
   });
-});
+});*/

@@ -1,0 +1,13 @@
+{
+  "env": {
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
+  "globals": {
+    "should": false
+  },
+  "rules": {
+    "max-len": 0
+  }
+}
