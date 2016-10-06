@@ -2,7 +2,7 @@
 
 const Utils = require('../../lib/pagestat/utils');
 
-const correctUrls = {
+const standardUrls = {
   'domain': {
     'url': 'http://domain.tld',
     'path': 'domain.tld.html'
@@ -17,7 +17,7 @@ const correctUrls = {
   },
   'domain.path': {
     'url': 'http://domain.tld/path',
-    'path': 'http://domain.tld/path'
+    'path': 'domain.tld/path.html'
   },
   'domain.path.x3': {
     'url': 'http://domain.tld/path/one/two',
@@ -49,19 +49,40 @@ const correctUrls = {
   }
 };
 
+const nonstandardUrls = {
+  'subdomain.x2.path.x3.queryStringParams.anchor - with spaces': {
+    'url': 'http://subdomain1.subdomain2.domain.tld/path/one / two /?param = one&param2 = two # an chor',
+    'path': 'subdomain1.subdomain2.domain.tld/path/one20/20two20/param2020oneandparam22020two20.html'
+  },
+  'subdomain.x2.path.x3.queryStringParams.anchor - with ampersand': {
+    'url': 'http://subdomain1.subdomain2.domain.tld/path/one/two/?&param=one&param2=two#anchor',
+    'path': 'subdomain1.subdomain2.domain.tld/path/one/two/andparamoneandparam2two.html'
+  },
+  'subdomain.x2.path.x3.queryStringParams.anchor - with non-standard chars': {
+    'url': 'http://subdomain1.subdomain2.domain.tld/path/one/t\\wo/?&p£a$r%a^m*=(o)n-e_&p+a=r@a:m;2<=>t,w?|o#anchor',
+    'path': 'subdomain1.subdomain2.domain.tld/path/one/t/wo/andppoundadollarra5Emon-e_andparam23C3Etw7Co.html'
+  }
+};
+
 describe('Utils', function() {
   beforeEach(function() {
     this.utils = Utils;
   });
 
   describe('#urlToFilePath(filePath)', function() {
-    context('positive scenarios', function() {
-      it('should convert urls into paths and add html extensions', function() {
-        Utils.urlToFilePath(correctUrls['domain'].url).should.equal(correctUrls['domain'].path);
-        // for (let key in correctUrls) {
-        //   console.log('[', key, ']:', correctUrls[key].url, '<->', correctUrls[key].path);
-        //   Utils.urlToFilePath(correctUrls[key].url).should.equal(correctUrls[key].path);
-        // }
+    context('standard scenarios', function() {
+      Object.keys(standardUrls).forEach(function(item) {
+        it(`should convert url into path for "${item}" test`, function() {
+          Utils.urlToFilePath(standardUrls[item].url).should.equal(standardUrls[item].path);
+        });
+      });
+    });
+
+    context('non-standard scenarios', function() {
+      Object.keys(nonstandardUrls).forEach(function(item) {
+        it(`should convert url into path for "${item}" test`, function() {
+          Utils.urlToFilePath(nonstandardUrls[item].url).should.equal(nonstandardUrls[item].path);
+        });
       });
     });
   });
