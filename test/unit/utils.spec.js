@@ -1,5 +1,7 @@
 'use strict';
 
+require('../support/bootstrap');
+
 const Utils = require('../../lib/pagestat/utils');
 
 const standardUrls = {
