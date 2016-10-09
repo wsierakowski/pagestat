@@ -2,12 +2,12 @@
 
 require('../support/bootstrap');
 
-//const StoreFS = require('../../lib/pagestat/store-fs');
 const statObject = require('./fixtures/statobjects/blog.sigman.pl.json');
+const statObjectParsed = JSON.stringify(statObject, null, 2);
 const filePath = 'blog.sigman.pl/posts/creating-command-line-tools-with-nodejs.html';
 const workFolder = 'temp';
 const fullPath = workFolder + '/' + filePath;
-const dirName = 'blog.sigman.pl/posts/';
+const dirName = 'temp/blog.sigman.pl/posts';
 
 describe('StoreFS', function() {
   beforeEach(function() {
@@ -45,7 +45,7 @@ describe('StoreFS', function() {
         .yields(null);
 
       this.fsStub.writeFile
-        .withArgs(fullPath, statObject)
+        .withArgs(fullPath, statObjectParsed)
         .yields(null);
 
       this.storeFS = new this.StoreFS();
@@ -58,7 +58,9 @@ describe('StoreFS', function() {
         .then(res => {
           should.not.exist(res);
           this.pathStub.join.should.have.been.calledOnce;
-          //this.mkdirpStub.should.have.been.calledOnce;
+          this.pathStub.dirname.should.have.been.calledOnce;
+          this.mkdirpStub.should.have.been.calledOnce;
+          this.fsStub.writeFile.should.have.been.calledOnce;
           //this.mkdirpStub.should.have.been.calledWith(workFolder, filePath);
         });
     });
