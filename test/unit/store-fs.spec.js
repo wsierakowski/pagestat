@@ -9,7 +9,7 @@ const workFolder = 'temp';
 const fullPath = workFolder + '/' + filePath;
 const dirName = 'temp/blog.sigman.pl/posts';
 
-describe('StoreFS', function() {
+describe('StoreFS - stub', function() {
   beforeEach(function() {
     this.pathStub = this.sandbox.stub({
       join: () => {},
@@ -27,7 +27,6 @@ describe('StoreFS', function() {
       path: this.pathStub,
       mkdirp: this.mkdirpStub
     });
-
   });
 
   describe('#save(filePath, obj)', function() {
