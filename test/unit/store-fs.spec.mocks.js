@@ -1,3 +1,10 @@
+/**
+* This test is going to be removed for the two following reasons:
+* - mocks shouldn't be used for 3rd party modules with implementation details hidden
+* - there shouldn't be more than one mocks in a single tests, in such a case
+*   as per the sinon.js doc for mocks we should be using stubs instead.
+*/
+/*
 'use strict';
 
 require('../support/bootstrap');
@@ -69,3 +76,4 @@ describe('StoreFS - mock', function() {
       });
     });
   });
+*/
