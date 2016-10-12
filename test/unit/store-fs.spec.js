@@ -9,7 +9,7 @@ const workFolder = 'temp';
 const fullPath = workFolder + '/' + filePath;
 const dirName = 'temp/blog.sigman.pl/posts';
 
-describe('StoreFS - stub', function() {
+describe('StoreFS', function() {
   beforeEach(function() {
     this.pathStub = this.sandbox.stub({
       join: () => {},
@@ -57,6 +57,7 @@ describe('StoreFS - stub', function() {
         .should.be.fulfilled
         .then(res => {
           should.not.exist(res);
+
           this.pathStub.join.should.have.been.calledOnce;
           this.pathStub.dirname.should.have.been.calledOnce;
           this.mkdirpStub.should.have.been.calledOnce;
